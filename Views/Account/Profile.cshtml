@@ -1,0 +1,22 @@
+@model ECommercePlatform.Models.ProfileViewModel
+
+<h2>Profile</h2>
+
+<form asp-action="UpdateProfile" method="post">
+    <div class="form-group">
+        <label asp-for="Email"></label>
+        <input asp-for="Email" class="form-contol" />
+        <span asp-validation-for="Email" class="text-denger" ></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="NewPassword"></label>
+        <input asp-for="NewPassword" type="password" class="form-contol" />
+        <span asp-validation-for="NewPassword" class="text-denger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="ConfirmNewPassword"></label>
+        <input asp-for="ConfirmNewPassword" type="password" class="form-contol" />
+        <span asp-validation-for="ConfirmNewPassword" class="text-denger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">UpdateProfile Profile</button>
+</form>

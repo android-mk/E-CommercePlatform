@@ -1,0 +1,32 @@
+@model List<ECommercePlatform.Models.Order>
+
+    <h2>Order History</h2>
+
+    @if (Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Order Date</th>
+                     <th>Total</th>
+                   <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                         <td>@order.OrderDate.ToShortDateString()</td>
+                          <td>@order.Total.ToString("C")</td>
+                          <td><a asp-action="Details" asp-route-id="@order.Id">View Details</a></td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+    else
+    {
+        <p>You have no past orders.</p>
+    }

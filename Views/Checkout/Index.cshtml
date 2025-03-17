@@ -1,0 +1,39 @@
+@model List<ECommercePlatform.Models.CartItem>
+
+<h2>Checkout</h2>
+
+@if (Model.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Price</th>
+                <th>Quantity</th>
+                <th>Total</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.Product?.Name</td>
+                    <td>@item.Product?.Price.ToString("C")</td>
+                    <td>@item.Quantity</td>
+                    <td>@((item.Product?.Price * item.Quantity)?.ToString("C"))</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="text-right">
+        <h4>Total: @Model.Sum(item => item.Product?.Price * item.Quantity ?? 0).ToString("C")</h4>
+        <form asp-action="ProcessCheckout" method="post">
+            <button type="submit" class="btn btn-success">Place Order</button>
+        </form>
+    </div>
+}
+else
+{
+    <p>Your cart is empty.</p>
+}

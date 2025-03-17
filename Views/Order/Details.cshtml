@@ -1,0 +1,33 @@
+@model ECommercePlatform.Models.Order
+
+<h2>Order Details</h2>
+
+<div>
+    <h4>Order ID: @Model.Id</h4>
+    <p>Order Date: @Model.OrderDate.ToString("MM/dd/yyyy")</p>
+    <p>Total: @Model.Total.ToString("C")</p>
+    <p>Status: @Model.Status</p>
+</div>
+
+<h3>Order Items</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.OrderItems)
+        {
+            <tr>
+                <td>@item.Product?.Name</td>
+                <td>@item.Product?.Price.ToString("C")</td>
+                <td>@item.Quantity</td>
+                <td>@((item.Product?.Price * item.Quantity)?.ToString("C"))</td>
+            </tr>
+        }
+    </tbody>
+</table>
