@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
 namespace ECommercePlatform.Models
@@ -5,10 +6,15 @@ namespace ECommercePlatform.Models
     public class CartItem
     {
         public int Id { get; set; }
+
+        [ForeignKey("Product")]
         public int ProductId { get; set; }
-        public Product? Product { get; set; } // Make nullable
+        public virtual  Product Product { get; set; }  // Changed to virtual for lazy loading
+
         public int Quantity { get; set; }
-        public string UserId { get; set; } = string.Empty; // Initialize with default value
-        public IdentityUser? User { get; set; } // Make nullable
+
+        [ForeignKey("User")]
+        public required string UserId { get; set; }  // Remove default value
+        public virtual  IdentityUser User { get; set; }
     }
 }

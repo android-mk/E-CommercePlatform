@@ -16,11 +16,11 @@ public class ProductController : Controller
     public IActionResult Index()
     {
         var products = _context.Products.ToList();
-        return View(products);
+        return View("~/Views/Admin/Products/Index.cshtml", products);
     }
     public IActionResult Create()
     {
-        return View();
+        return View("Create");
     }
 
     [HttpPost]

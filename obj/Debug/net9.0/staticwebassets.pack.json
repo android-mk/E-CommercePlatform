@@ -1,8 +1,8 @@
 {
   "Files": [
     {
-      "Id": "C:\\Users\\user\\EcommercePlatform\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\ECommercePlatform.bundle.scp.css",
-      "PackagePath": "staticwebassets\\ECommercePlatform.1zen4z7b14.bundle.scp.css"
+      "Id": "C:\\Users\\user\\EcommercePlatform\\obj\\Debug\\net9.0\\scopedcss\\projectbundle\\EcommercePlatform.bundle.scp.css",
+      "PackagePath": "staticwebassets\\EcommercePlatform.9oxhf34evy.bundle.scp.css"
     },
     {
       "Id": "C:\\Users\\user\\EcommercePlatform\\wwwroot\\css\\site.css",
@@ -257,24 +257,24 @@
       "PackagePath": "staticwebassets\\lib\\jquery\\dist\\jquery.slim.min.map"
     },
     {
-      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ECommercePlatform.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.EcommercePlatform.Microsoft.AspNetCore.StaticWebAssetEndpoints.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssetEndpoints.props"
     },
     {
-      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.ECommercePlatform.Microsoft.AspNetCore.StaticWebAssets.props",
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.EcommercePlatform.Microsoft.AspNetCore.StaticWebAssets.props",
       "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
     },
     {
-      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.ECommercePlatform.props",
-      "PackagePath": "build\\ECommercePlatform.props"
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.build.EcommercePlatform.props",
+      "PackagePath": "build\\EcommercePlatform.props"
     },
     {
-      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.ECommercePlatform.props",
-      "PackagePath": "buildMultiTargeting\\ECommercePlatform.props"
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildMultiTargeting.EcommercePlatform.props",
+      "PackagePath": "buildMultiTargeting\\EcommercePlatform.props"
     },
     {
-      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.ECommercePlatform.props",
-      "PackagePath": "buildTransitive\\ECommercePlatform.props"
+      "Id": "obj\\Debug\\net9.0\\staticwebassets\\msbuild.buildTransitive.EcommercePlatform.props",
+      "PackagePath": "buildTransitive\\EcommercePlatform.props"
     }
   ],
   "ElementsToRemove": []

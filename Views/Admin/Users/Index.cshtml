@@ -8,6 +8,25 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    .table-responsive {
+        border-radius: 0.25rem;
+        overflow: hidden;
+    }
+
+    .table-hover tbody tr:hover {
+        background-color: rgba(0, 0, 0, 0.05);
+    }
+
+    .bi-check-circle-fill, .bi-x-circle-fill {
+        font-size: 1.25rem;
+    }
+
+    .btn-group .btn {
+        margin-right: 5px;
+    }
+</style>
+
 <div class="container-fluid">
     <h2 class="mb-4">Manage Users</h2>
 
@@ -52,15 +71,15 @@
                             </td>
                             <td>
                                 <div class="btn-group" role="group">
-                                    <a asp-action="EditUser" asp-route-id="@user.Id" 
+                                    <a asp-action="EditUser" asp-route-id="@user.Id"
                                        class="btn btn-sm btn-outline-warning">
                                         <i class="bi bi-pencil"></i> Edit
                                     </a>
-                                    <a asp-action="ManageRoles" asp-route-userId="@user.Id" 
+                                    <a asp-action="ManageRoles" asp-route-userId="@user.Id"
                                        class="btn btn-sm btn-outline-info">
                                         <i class="bi bi-shield"></i> Roles
                                     </a>
-                                    <button type="button" class="btn btn-sm btn-outline-danger" 
+                                    <button type="button" class="btn btn-sm btn-outline-danger"
                                             data-bs-toggle="modal" data-bs-target="#deleteModal-@user.Id">
                                         <i class="bi bi-trash"></i> Delete
                                     </button>
@@ -95,21 +114,3 @@
         </div>
     }
 </div>
-
-@section Styles {
-    <style>
-        .table-responsive {
-            border-radius: 0.25rem;
-            overflow: hidden;
-        }
-        .table-hover tbody tr:hover {
-            background-color: rgba(0, 0, 0, 0.05);
-        }
-        .bi-check-circle-fill, .bi-x-circle-fill {
-            font-size: 1.25rem;
-        }
-        .btn-group .btn {
-            margin-right: 5px;
-        }
-    </style>
-}

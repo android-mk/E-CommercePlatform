@@ -27,13 +27,13 @@ public class AdminController : Controller
     public async Task<IActionResult> Index()
     {
         var products = await _context.Products.ToListAsync();
-        return View(products);
+        return View("Products/Index", products);
     }
 
     // GET: Admin/Products/Create
     public IActionResult Create()
     {
-        return View();
+        return View("Products/Create");
     }
 
     [HttpPost]
@@ -46,7 +46,7 @@ public class AdminController : Controller
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-        return View(product);
+        return View("Products/Create", product);
     }
 
     // GET: Admin/Products/Edit/5
@@ -185,16 +185,10 @@ public async Task<IActionResult> OrderDetails(int id)
     // GET: Admin/Users
     [HttpGet]
     public async Task<IActionResult> Users()
-    {
-        try { 
+{
         var users = await _userManager.Users.ToListAsync();
-        return View("Users/Index" ,users);
-        }
-        catch(Exception ex)
-        {
-            return BadRequest();
-        }
-    }
+        return View("Users/Index", users);
+}
 
     // POST: Admin/UpdateUserRole
     [HttpPost]

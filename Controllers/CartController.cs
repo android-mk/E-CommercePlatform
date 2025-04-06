@@ -15,74 +15,105 @@ public class CartController : Controller
         _context = context;
     }
 
-    //action to add product to the cart
-    public async Task<IActionResult> AddToCart(int ProductId)
-    {
-        var userId =User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the current user's ID
-        // Check if the product is already in the cart
-        if (userId == null)
-    {
-        return RedirectToAction("Login", "Account"); // Handle null userId
-    }
-        var cartItem = await _context.CartItems
-            .FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == ProductId);
-        if (cartItem == null)
-        {
-            // Add new item to the cart
-            cartItem = new CartItem
-            {
-                UserId = userId,
-                ProductId = ProductId,
-                Quantity = 1
-            };
-            _context.CartItems.Add(cartItem);
-        }
-        else
-        {
-            // Update quantity if the item already exists
-            cartItem.Quantity++;
-        }
-        await _context.SaveChangesAsync();
-        return RedirectToAction("Index"); // Redirect to the cart page
-
-
-    }
-
-//UpdateQuantity Action
 [HttpPost]
-public async Task<IActionResult> UpdateQuantity(int id,int quantity)
+public async Task<IActionResult> AddToCart(int productId)
 {
-    var cartItem = await _context.CartItems.FindAsync(id);
-    if (cartItem != null)
-    {
-        cartItem.Quantity = quantity;
-        await _context.SaveChangesAsync();
-    }
-    return RedirectToAction("Index");
-}
-
-//RemoveFromCart Action
-public async Task<IActionResult> RemoveFromCart(int id)
-{
-    var cartItem = await _context.CartItems.FindAsync(id);
-    if (cartItem != null)
-    {
-        _context.CartItems.Remove(cartItem);
-        await _context.SaveChangesAsync();
-    }
-    return RedirectToAction("Index");
-}
-
-//Index Action
-public async Task<IActionResult> Index()
-{
-    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); // Get the current user's ID
+    var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
     
-    // Fetch cart items for the current user
-    var cartItems = await _context.CartItems
-       .Include(c => c.Product) //Include product details
-       .Where(c => c.UserId == userId)
-       .ToListAsync();
-    return View(cartItems);   
+    if (string.IsNullOrEmpty(userId))
+    {
+        return RedirectToAction("Login", "Account");
+    }
+
+    // Verify product exists and is in stock
+    var product = await _context.Products.FindAsync(productId);
+    if (product == null || product.StockQuantity < 1)
+    {
+        TempData["Error"] = "Product unavailable";
+        return RedirectToAction("Index", "Home");
+    }
+
+    var cartItem = await _context.CartItems
+        .Include(c => c.Product)
+        .FirstOrDefaultAsync(c => c.UserId == userId && c.ProductId == productId);
+
+    if (cartItem == null)
+    {
+        cartItem = new CartItem
+        {
+            UserId = userId,
+            ProductId = productId,
+            Quantity = 1
+        };
+        _context.CartItems.Add(cartItem);
+    }
+    else
+    {
+        if (cartItem.Quantity >= product.StockQuantity)
+        {
+            TempData["Error"] = "Maximum quantity reached";
+            return RedirectToAction("Index");
+        }
+        cartItem.Quantity++;
+    }
+
+    await _context.SaveChangesAsync();
+    TempData["Success"] = "Added to cart!";
+    return RedirectToAction("Index");
 }
+
+    [HttpPost]
+    public async Task<IActionResult> UpdateQuantity(int id, int quantity)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var cartItem = await _context.CartItems
+            .Include(c => c.Product)
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
+
+        if (cartItem != null)
+        {
+            if (quantity < 1)
+            {
+                TempData["ErrorMessage"] = "Quantity cannot be less than 1";
+            }
+            else if (quantity > cartItem.Product.StockQuantity)
+            {
+                TempData["ErrorMessage"] = $"Maximum available quantity is {cartItem.Product.StockQuantity}";
+            }
+            else
+            {
+                cartItem.Quantity = quantity;
+                await _context.SaveChangesAsync();
+                TempData["SuccessMessage"] = "Quantity updated";
+            }
+        }
+        return RedirectToAction("Index");
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> RemoveFromCart(int id)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var cartItem = await _context.CartItems
+            .FirstOrDefaultAsync(c => c.Id == id && c.UserId == userId);
+
+        if (cartItem != null)
+        {
+            _context.CartItems.Remove(cartItem);
+            await _context.SaveChangesAsync();
+            TempData["SuccessMessage"] = "Item removed from cart";
+        }
+        return RedirectToAction("Index");
+    }
+
+    public async Task<IActionResult> Index()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        var cartItems = await _context.CartItems
+            .Include(c => c.Product)
+            .Where(c => c.UserId == userId)
+            .ToListAsync();
+
+        return View(cartItems);
+    }
 }
